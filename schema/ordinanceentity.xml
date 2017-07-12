@@ -1,0 +1,8 @@
+<schema adapter="tagabukid_etracs">
+	<element name="ordinanceentity" tablename="ordinanceentity">
+		<field name="objid" primary="true"/>
+		<field name="entity_objid" required="true"/>
+		<field name="rsno" required="true"/>
+		<field name="spno" required="true"/>
+	</element>
+</schema>

@@ -1,0 +1,31 @@
+import com.rameses.annotations.*;
+import com.rameses.eserver.*;
+import com.rameses.common.*;
+
+class TagabukidLegistlativeArchiveLookupUtilService
+{
+	@PersistenceContext('tagabukid_etracs')
+	def em
+
+	@Env
+	def env;
+	
+	@ProxyMethod
+	public def lookup( namedsql, params, pagingKeys) {
+		if (! params) params = [:]
+		params.searchtext = (params.searchtext && params.searchtext.trim().length() > 0 ? params.searchtext : '') + '%'
+
+		def qry = em.sqlContext.createNamedQuery(namedsql)
+		
+		if (pagingKeys){
+			qry.setPagingKeys(pagingKeys)
+		}
+		if (params._start != null){
+			qry.setFirstResult( params._start )
+			qry.setMaxResults(params._limit)
+		}
+		
+		return qry.setParameters(params).resultList 
+	}
+
+}
